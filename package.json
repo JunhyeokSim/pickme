@@ -1,4 +1,11 @@
 {
+  "name": "pickme",
+  "version": "1.0.0",
+  "description": "You still won't pick? Even like this?",
+  "main": "index.js",
+  "repository": "https://github.com/borb-choi/pickme.git",
+  "author": "BORB <qzsec299@naver.com>",
+  "license": "Beerware License",
   "dependencies": {
     "gulp-cli": "^2.3.0"
   }
