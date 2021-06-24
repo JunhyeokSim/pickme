@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/borb-choi/pickme.git",
   "author": "BORB <qzsec299@naver.com>",
-  "license": "Beerware License",
+  "license": "Beerware",
   "scripts": {
     "dev": "gulp dev",
     "build": "gulp build"
@@ -14,6 +14,7 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/register": "^7.14.5",
+    "del": "^6.0.0",
     "gulp-pug": "^5.0.0"
   },
   "devDependencies": {
