@@ -8,24 +8,35 @@
   "license": "Beerware",
   "scripts": {
     "dev": "gulp dev",
-    "build": "gulp build"
+    "build": "gulp build",
+    "deploy": "gulp deploy"
   },
   "dependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/register": "^7.14.5",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
     "del": "^6.0.0",
     "gulp-autoprefixer": "^8.0.0",
-    "gulp-bro": "^2.0.0",
     "gulp-csso": "^4.0.1",
     "gulp-image": "^6.2.1",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
     "gulp-webserver": "^0.9.1",
-    "sass": "^1.35.1"
+    "sass": "^1.35.1",
+    "tsify": "^5.0.4",
+    "typescript": "^4.3.4",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-gh-pages": "^0.5.4"
+  },
+  "resolutions": {
+    "gift": "^0.10.2"
   }
 }

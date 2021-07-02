@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "commonjs", // node.js를 평범하게 사용하고 다양한 걸 import, export할 수 있게
+    "target": "ES6", // 어떤 버전의 JavaScript로 컴파일 되고 싶은지
+    "noImplicitAny": true
+  }
+}

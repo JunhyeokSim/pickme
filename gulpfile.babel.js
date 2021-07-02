@@ -1,12 +1,22 @@
 import gulp from "gulp";
 import gulpWS from "gulp-webserver";
+import gulpGhPages from "gulp-gh-pages";
 import del from "del";
+
 // Image
 import gulpImg from "gulp-image";
+
 // JavsScript
-import gulpBro from "gulp-bro";
+import tsify from "tsify";
+import browserify from "browserify";
+import vinylSource from "vinyl-source-stream";
+import vinylBuffer from "vinyl-buffer";
+import gulpUglify from "gulp-uglify";
+import gulpSourcemaps from "gulp-sourcemaps";
+
 // HTML
 import gulpPug from "gulp-pug";
+
 // CSS
 import gulpAutop from "gulp-autoprefixer";
 import gulpCsso from "gulp-csso";
@@ -25,6 +35,7 @@ const routes = {
     dest: "build/css",
   },
   ts: {
+    watch: "src/ts/**/*.ts",
     src: "src/ts/main.ts",
     dest: "build/js",
   },
@@ -45,12 +56,28 @@ const styles = () =>
     .pipe(gulpCsso())
     .pipe(gulp.dest(routes.scss.dest));
 
-const js = () => gulp.src(routes.ts.src).pipe();
+const ts = () =>
+  browserify({
+    debug: true,
+    entries: routes.ts.src,
+  })
+    .plugin(tsify)
+    .transform("babelify", {
+      presets: ["@babel/preset-env"],
+      extensions: [".tsx", ".ts"],
+    })
+    .bundle()
+    .pipe(vinylSource("main.js"))
+    .pipe(vinylBuffer())
+    .pipe(gulpSourcemaps.init({ loadMaps: true }))
+    .pipe(gulpUglify())
+    .pipe(gulpSourcemaps.write("./"))
+    .pipe(gulp.dest(routes.ts.dest));
 
 const img = () =>
   gulp.src(routes.img.src).pipe(gulpImg()).pipe(gulp.dest(routes.img.dest));
 
-const clean = () => del(["build"]);
+const clean = () => del(["build", ".publish"]);
 
 const webserver = () =>
   gulp.src("build").pipe(gulpWS({ livereload: true, open: true }));
@@ -58,16 +85,22 @@ const webserver = () =>
 const watch = () => {
   gulp.watch(routes.pug.watch, pug);
   gulp.watch(routes.scss.watch, styles);
+  gulp.watch(routes.ts.watch, ts);
+
   // gulp.watch(routes.img.src, img);
 };
 
-// Series
+// Deploy
+const ghDeploy = () => gulp.src("build/**/*").pipe(gulpGhPages());
 
+// Series
 const prepare = gulp.series(clean, img);
 
-const assets = gulp.series(pug, styles);
+const assets = gulp.series(pug, styles, ts);
 
 // 병렬 연산으로 앞뒤가 바뀌어도 된다!!!!
-const postDev = gulp.parallel(webserver, watch);
+const live = gulp.parallel(webserver, watch);
 
-export const dev = gulp.series(prepare, assets, postDev);
+export const build = gulp.series(prepare, assets);
+export const dev = gulp.series(build, live);
+export const deploy = gulp.series(build, ghDeploy);

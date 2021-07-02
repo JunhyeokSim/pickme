@@ -60,3 +60,20 @@ typings/
 # next.js build output
 .next 
 build/
+
+# Mac OS generated files #
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+*.DS_Store
+
+# IDE
+*.idea
+*.iml
+
+# VSC config 
+.vscode
+
+# Gulp github pages 
+.publish
