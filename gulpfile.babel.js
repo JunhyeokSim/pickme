@@ -26,7 +26,7 @@ const sass = require("gulp-sass")(require("sass"));
 const routes = {
   pug: {
     watch: "src/**/*.pug",
-    src: "src/*.pug",
+    src: "src/views/*.pug",
     dest: "build",
   },
   scss: {
